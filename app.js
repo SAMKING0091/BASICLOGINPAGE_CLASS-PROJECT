@@ -1,14 +1,14 @@
 // Application State
 let currentUser = null;
 let userData = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567',
+    name: 'Amit Singh Negi',
+    email: 'xyz@gmail.com',
+    phone: '+91 9876543210',
     role: 'Administrator',
     department: 'Engineering',
-    location: 'San Francisco, CA',
+    location: 'Mohali, PUNJAB',
     bio: 'Experienced administrator with a passion for technology and innovation.',
-    memberSince: '2024',
+    memberSince: '2026',
     status: 'Active',
     notifications: true
 };
@@ -16,14 +16,14 @@ let userData = {
 let activityLog = [];
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeApp();
 });
 
 function initializeApp() {
     // Set up event listeners
     setupEventListeners();
-    
+
     // Show login section by default
     showLogin();
 }
@@ -34,25 +34,25 @@ function setupEventListeners() {
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
     }
-    
+
     // Demo login button
     const demoLoginBtn = document.getElementById('demo-login');
     if (demoLoginBtn) {
         demoLoginBtn.addEventListener('click', handleDemoLogin);
     }
-    
+
     // Logout button
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', handleLogout);
     }
-    
+
     // User data form submission
     const userDataForm = document.getElementById('user-data-form');
     if (userDataForm) {
         userDataForm.addEventListener('submit', handleSaveUserData);
     }
-    
+
     // Reset button
     const resetBtn = document.getElementById('reset-btn');
     if (resetBtn) {
@@ -63,10 +63,10 @@ function setupEventListeners() {
 // Login Logic
 function handleLogin(e) {
     e.preventDefault();
-    
+
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    
+
     // Simple authentication (admin/admin)
     if (username === 'admin' && password === 'admin') {
         currentUser = username;
@@ -101,7 +101,7 @@ function showLogin() {
 function showDashboard() {
     document.getElementById('login-section').classList.remove('active');
     document.getElementById('dashboard-section').classList.add('active');
-    
+
     // Update dashboard with current user
     updateDashboardUI();
     renderActivityLog();
@@ -114,13 +114,13 @@ function updateDashboardUI() {
     if (currentUserElement) {
         currentUserElement.textContent = currentUser.charAt(0).toUpperCase() + currentUser.slice(1);
     }
-    
+
     // Update profile card
     document.getElementById('profile-name').textContent = userData.name;
     document.getElementById('profile-role').textContent = userData.role;
     document.getElementById('profile-since').textContent = userData.memberSince;
     document.getElementById('profile-status').textContent = userData.status;
-    
+
     // Populate form with current data
     document.getElementById('edit-name').value = userData.name;
     document.getElementById('edit-email').value = userData.email;
@@ -135,7 +135,7 @@ function updateDashboardUI() {
 // CRUD Operations
 function handleSaveUserData(e) {
     e.preventDefault();
-    
+
     // Get form values
     const formData = {
         name: document.getElementById('edit-name').value,
@@ -147,20 +147,20 @@ function handleSaveUserData(e) {
         bio: document.getElementById('edit-bio').value,
         notifications: document.getElementById('edit-notifications').checked
     };
-    
+
     // Update userData object
     userData = {
         ...userData,
         ...formData
     };
-    
+
     // Update UI
     updateDashboardUI();
-    
+
     // Add activity
     addActivity('Updated profile information');
     renderActivityLog();
-    
+
     // Show success notification
     showNotification('Your changes have been saved successfully!', 'success');
 }
@@ -185,8 +185,8 @@ function saveUserData(data) {
 // Activity Log
 function addActivity(description) {
     const now = new Date();
-    const timeString = now.toLocaleTimeString('en-US', { 
-        hour: '2-digit', 
+    const timeString = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
         minute: '2-digit'
     });
     const dateString = now.toLocaleDateString('en-US', {
@@ -194,12 +194,12 @@ function addActivity(description) {
         day: 'numeric',
         year: 'numeric'
     });
-    
+
     activityLog.unshift({
         time: `${dateString} at ${timeString}`,
         description: description
     });
-    
+
     // Keep only last 10 activities
     if (activityLog.length > 10) {
         activityLog = activityLog.slice(0, 10);
@@ -208,7 +208,7 @@ function addActivity(description) {
 
 function renderActivityLog() {
     const activityLogElement = document.getElementById('activity-log');
-    
+
     if (activityLog.length === 0) {
         activityLogElement.innerHTML = `
             <div class="text-center text-muted py-4">
@@ -218,7 +218,7 @@ function renderActivityLog() {
         `;
         return;
     }
-    
+
     activityLogElement.innerHTML = activityLog.map(activity => `
         <div class="activity-item">
             <div class="activity-time">${activity.time}</div>
@@ -234,10 +234,10 @@ function showNotification(message, type = 'success') {
     const toastHeader = toast.querySelector('.toast-header');
     const icon = toastHeader.querySelector('i');
     const title = toastHeader.querySelector('strong');
-    
+
     // Update content
     toastBody.textContent = message;
-    
+
     // Update styling based on type
     if (type === 'success') {
         icon.className = 'bi bi-check-circle-fill text-success me-2';
@@ -249,7 +249,7 @@ function showNotification(message, type = 'success') {
         icon.className = 'bi bi-info-circle-fill text-primary me-2';
         title.textContent = 'Info';
     }
-    
+
     // Show toast
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
@@ -259,3 +259,4 @@ function showNotification(message, type = 'success') {
 setTimeout(() => {
     addActivity('Application initialized');
 }, 100);
+
